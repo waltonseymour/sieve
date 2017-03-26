@@ -55,7 +55,7 @@ func main() {
 					Destination: &outFile,
 				},
 				cli.IntFlag{
-					Name:        "maxInt",
+					Name:        "max",
 					Value:       1000,
 					Usage:       "Maximum number to generate primes up to",
 					Destination: &maxInt,
