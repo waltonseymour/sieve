@@ -36,7 +36,8 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "Sieve"
 	app.Version = "0.1.0"
-	app.Usage = "cli tool for fast prime number generation"
+	app.Usage = "CLI tool for efficient prime number generation"
+	app.Author = "Walton Seymour"
 	app.EnableBashCompletion = true
 	app.Commands = []cli.Command{
 		{
