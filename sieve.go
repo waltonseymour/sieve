@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"strconv"
+
 	"github.com/urfave/cli"
 )
 
@@ -17,16 +19,24 @@ func sieve(maxInt int, outFile string) {
 	}
 	writer := bufio.NewWriter(f)
 	defer writer.Flush()
-	var nums = make([]bool, maxInt, maxInt)
-	for i := 2; i < maxInt; i++ {
+	var nums = make([]bool, maxInt/2, maxInt/2)
+
+	// writes 2 early
+	writeToFile(writer, 2)
+
+	for i := 3; i < maxInt; i += 2 {
 		// false is unseen
-		if nums[i] == false {
-			writer.WriteString(string(i))
-			for j := i; j < maxInt; j += i {
-				nums[j] = true
+		if nums[i/2] == false {
+			writeToFile(writer, i)
+			for j := i; j < maxInt; j += 2 * i {
+				nums[j/2] = true
 			}
 		}
 	}
+}
+
+func writeToFile(w *bufio.Writer, i int) {
+	w.WriteString(strconv.Itoa(i) + "\n")
 }
 
 func main() {
