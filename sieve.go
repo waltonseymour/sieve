@@ -11,22 +11,22 @@ import (
 func sieve(maxInt int, outFile string) {
 	os.Create(outFile)
 	f, err := os.OpenFile(outFile, os.O_RDWR|os.O_APPEND, 0660)
+	defer f.Close()
 	if err != nil {
 		fmt.Println(err)
 	}
 	writer := bufio.NewWriter(f)
+	defer writer.Flush()
 	var nums = make([]bool, maxInt, maxInt)
 	for i := 2; i < maxInt; i++ {
 		// false is unseen
 		if nums[i] == false {
-			fmt.Fprintln(writer, i)
+			writer.WriteString(string(i))
 			for j := i; j < maxInt; j += i {
 				nums[j] = true
 			}
 		}
 	}
-	writer.Flush()
-	f.Close()
 }
 
 func main() {
