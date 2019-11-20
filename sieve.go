@@ -8,14 +8,13 @@ import (
 // Sieve is an io.Reader that ouputs a stream of newline seperated prime numbers
 // prime numbers are generated using the sieve of eratosthenes.
 type Sieve struct {
-	max     int
 	nums    []bool
 	current int
 }
 
 // New generates a new Sieve with the max value assigned
 func New(max int) *Sieve {
-	return &Sieve{max: max, nums: make([]bool, max), current: 2}
+	return &Sieve{nums: make([]bool, max), current: 2}
 }
 
 func (s *Sieve) Read(p []byte) (n int, err error) {
@@ -26,11 +25,11 @@ func (s *Sieve) Read(p []byte) (n int, err error) {
 		return n, nil
 	}
 
-	for s.current < s.max {
+	for s.current < len(s.nums) {
 		if s.nums[s.current/2] == false {
 			n := copy(p, []byte(strconv.Itoa(s.current)+"\n"))
 
-			for j := s.current; j < s.max; j += 2 * s.current {
+			for j := s.current; j < len(s.nums); j += 2 * s.current {
 				s.nums[j/2] = true
 			}
 
