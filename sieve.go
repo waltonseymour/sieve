@@ -14,7 +14,7 @@ type Sieve struct {
 
 // New generates a new Sieve with the max value assigned
 func New(max int) *Sieve {
-	return &Sieve{nums: make([]bool, max), current: 2}
+	return &Sieve{nums: make([]bool, max/2), current: 2}
 }
 
 func (s *Sieve) Read(p []byte) (n int, err error) {
@@ -25,11 +25,11 @@ func (s *Sieve) Read(p []byte) (n int, err error) {
 		return n, nil
 	}
 
-	for s.current < len(s.nums) {
+	for s.current < len(s.nums)*2 {
 		if s.nums[s.current/2] == false {
 			n := copy(p, []byte(strconv.Itoa(s.current)+"\n"))
 
-			for j := s.current; j < len(s.nums); j += 2 * s.current {
+			for j := s.current; j < len(s.nums)*2; j += 2 * s.current {
 				s.nums[j/2] = true
 			}
 
